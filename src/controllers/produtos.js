@@ -1,9 +1,14 @@
 //Services
-const { CreateProduto } = require('../services/produtos');
+const {
+    CreateProduto,
+    EditProduto
+} = require('../services/produtos');
 
 //Validation
-const { yupCreateProduto } = require('../validations/yupProdutos');
-
+const {
+    yupCreateProduto,
+    yupEditProduto
+} = require('../validations/yupProdutos');
 
 async function CreateProdutoController(req, res) {
     try {
@@ -25,4 +30,40 @@ async function CreateProdutoController(req, res) {
     };
 };
 
-module.exports = { CreateProdutoController };
+async function EditProdutoController(req, res) {
+    const { id } = req.params;
+    if (!id || !(Number(id) >= 0)) return res.status(400).json({
+        message: 'Id é obrigatório e há de ser um número válido.'
+    });
+
+    const reqBodyLength = Object.keys(req.body).length;
+
+    if (reqBodyLength === 0) return res.status(400).json({
+        message: 'Ao menos um campo é necessário para edição.'
+    });
+
+    try {
+        await yupEditProduto.validate(req.body);
+
+        const { produto, message } = await EditProduto(req.body, id);
+
+        if (produto) {
+            return res.status(200).json({
+                produto
+            });
+        } else {
+            return res.status(400).json({
+                message
+            });
+        };
+    } catch ({ message }) {
+        return res.status(500).json({
+            message
+        });
+    };
+};
+
+module.exports = {
+    CreateProdutoController,
+    EditProdutoController
+};

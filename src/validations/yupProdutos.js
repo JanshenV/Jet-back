@@ -10,7 +10,7 @@ const yupCreateProduto = yup.object().shape({
 });
 
 const yupEditProduto = yup.object().shape({
-    nome: yup.string(),
+    nome: yup.string().max(150),
     imagem: yup.string(),
     descricao: yup.string().max(2000),
     estoque: yup.number(),

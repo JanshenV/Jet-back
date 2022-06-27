@@ -19,7 +19,38 @@ async function CreateProduto(produtoData) {
     };
 };
 
+async function EditProduto(produtoData, produtoId) {
+    try {
+        let produto = await knex('produtos')
+            .where({ id: produtoId })
+            .first();
+
+        if (!produto) return {
+            message: 'Produto não existe.'
+        };
+
+        const editingProduto = {
+            nome: produtoData.nome ? produtoData.nome : produto.nome,
+            imagem: produtoData.imagem ? produtoData.imagem : produto.imagem,
+            descricao: produtoData.descricao ? produtoData.descricao : produto.descricao,
+            estoque: produtoData.estoque ? produtoData.estoque : produto.estoque,
+            status: produtoData.status ? produtoData.status : produto.status,
+            preco: produtoData.preco ? produtoData.preco : produto.preco
+        };
+
+        produto = await knex('produtos')
+            .where({ id: produtoId })
+            .update(editingProduto)
+            .returning('*');
+
+        return { produto };
+    } catch ({ message }) {
+        return { message };
+    };
+};
+
 
 module.exports = {
-    CreateProduto
+    CreateProduto,
+    EditProduto
 };
