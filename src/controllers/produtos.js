@@ -98,9 +98,7 @@ async function ListingProdutoController(req, res) {
             message
         });
 
-        return res.status(200).json({
-            allProdutos
-        });
+        return res.status(200).json(allProdutos);
     } catch ({ message }) {
         return res.status(500).json({
             message
