@@ -7,7 +7,7 @@ create table produtos(
     descricao varchar(2000) not null,
     estoque int,
     status boolean default false,
-    preco float
+    preco float not null
 );
 `;
 
