@@ -49,8 +49,28 @@ async function EditProduto(produtoData, produtoId) {
     };
 };
 
+async function DeleteProduto(produtoId) {
+    try {
+        let produto = await knex('produtos')
+            .where({ id: produtoId })
+            .first();
+
+        if (!produto) return {
+            message: 'Produto não existe.'
+        };
+
+        await knex('produtos')
+            .del()
+            .where({ id: produtoId });
+
+        return { message: 'Produto deletado!' };
+    } catch ({ message }) {
+        return { message };
+    };
+};
 
 module.exports = {
     CreateProduto,
-    EditProduto
+    EditProduto,
+    DeleteProduto
 };

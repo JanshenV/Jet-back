@@ -1,7 +1,8 @@
 //Services
 const {
     CreateProduto,
-    EditProduto
+    EditProduto,
+    DeleteProduto
 } = require('../services/produtos');
 
 //Validation
@@ -63,7 +64,33 @@ async function EditProdutoController(req, res) {
     };
 };
 
+async function DeleteProdutoController(req, res) {
+    const { id } = req.params;
+    if (!id || !(Number(id) >= 0)) return res.status(400).json({
+        message: 'Id é obrigatório e há de ser um número válido.'
+    });
+
+    try {
+        const { message } = await DeleteProduto(id);
+
+        if (message.includes('deletado')) {
+            return res.status(200).json({
+                message
+            });
+        } else {
+            return res.status(400).json({
+                message
+            });
+        }
+    } catch ({ message }) {
+        return res.status(500).json({
+            message
+        });
+    };
+};
+
 module.exports = {
     CreateProdutoController,
-    EditProdutoController
+    EditProdutoController,
+    DeleteProdutoController
 };
