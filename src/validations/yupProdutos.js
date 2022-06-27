@@ -1,7 +1,7 @@
 const yup = require('./yup');
 
 const yupCreateProduto = yup.object().shape({
-    nome: yup.string().required('Nome do produto é obrigatório.'),
+    nome: yup.string().max(150).required('Nome do produto é obrigatório.'),
     imagem: yup.string(),
     descricao: yup.string().max(2000).required('Descrição do produto é obrigatório.'),
     estoque: yup.number().required(),
@@ -10,7 +10,7 @@ const yupCreateProduto = yup.object().shape({
 });
 
 const yupEditProduto = yup.object().shape({
-    nome: yup.string(),
+    nome: yup.string().max(150),
     imagem: yup.string(),
     descricao: yup.string().max(2000),
     estoque: yup.number(),
