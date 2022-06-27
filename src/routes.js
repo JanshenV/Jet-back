@@ -5,7 +5,8 @@ const routes = express();
 const {
     CreateProdutoController,
     EditProdutoController,
-    DeleteProdutoController
+    DeleteProdutoController,
+    ListingProdutoController
 } = require('./controllers/produtos');
 
 routes.get('/', (req, res) => {
@@ -14,5 +15,6 @@ routes.get('/', (req, res) => {
 routes.post('/produtos', CreateProdutoController);
 routes.put('/produtos/:id', EditProdutoController);
 routes.delete('/produtos/:id', DeleteProdutoController);
+routes.get('/produtos', ListingProdutoController);
 
 module.exports = routes;

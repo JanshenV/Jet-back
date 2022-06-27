@@ -2,7 +2,8 @@
 const {
     CreateProduto,
     EditProduto,
-    DeleteProduto
+    DeleteProduto,
+    ListingProduto
 } = require('../services/produtos');
 
 //Validation
@@ -89,8 +90,27 @@ async function DeleteProdutoController(req, res) {
     };
 };
 
+async function ListingProdutoController(req, res) {
+    try {
+        const { message, allProdutos } = await ListingProduto();
+
+        if (message) return res.status(404).json({
+            message
+        });
+
+        return res.status(200).json({
+            allProdutos
+        });
+    } catch ({ message }) {
+        return res.status(500).json({
+            message
+        });
+    };
+};
+
 module.exports = {
     CreateProdutoController,
     EditProdutoController,
-    DeleteProdutoController
+    DeleteProdutoController,
+    ListingProdutoController
 };

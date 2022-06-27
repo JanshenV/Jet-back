@@ -69,8 +69,24 @@ async function DeleteProduto(produtoId) {
     };
 };
 
+async function ListingProduto() {
+    try {
+        const allProdutos = await knex('produtos')
+            .select('*');
+
+        if (!allProdutos.length) return {
+            message: 'Não há produtos.'
+        };
+
+        return { allProdutos };
+    } catch ({ message }) {
+        return { message };
+    };
+};
+
 module.exports = {
     CreateProduto,
     EditProduto,
-    DeleteProduto
+    DeleteProduto,
+    ListingProduto
 };
