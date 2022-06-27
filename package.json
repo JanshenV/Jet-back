@@ -24,6 +24,8 @@
     "knex": "^2.1.0",
     "nodemon": "^2.0.18",
     "pg": "^8.7.3",
+    "swagger-autogen": "^2.21.4",
+    "swagger-ui-express": "^4.4.0",
     "yup": "^0.32.11",
     "yup-locales": "^1.2.8"
   }
